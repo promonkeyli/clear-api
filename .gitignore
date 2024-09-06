@@ -1,3 +1,7 @@
 .idea/
 .vscode/
 dist/
+.yalc
+yalc.lock
+.idea
+node_modules

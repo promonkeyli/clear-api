@@ -30,6 +30,6 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "swagger2openapi": "^7.0.8"
+    "swagger2openapi": "file:.yalc/swagger2openapi"
   }
 }
