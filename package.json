@@ -5,19 +5,11 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && yalc push",
-    "test": "node dist/test/test"
+    "build": "tsc",
+    "test": "node dist/index.js"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "clear",
-    "api",
-    "clear-api",
-    "openapi",
-    "swagger"
-  ],
+  "files": ["dist"],
+  "keywords": ["clear", "api", "clear-api", "openapi", "swagger"],
   "author": "promonkeyli",
   "license": "MIT",
   "repository": {
