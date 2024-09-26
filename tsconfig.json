@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist",
     "target": "es2015",
     "module": "ESNext",
     "declaration": true,
@@ -10,8 +9,5 @@
     "skipLibCheck": true,
     "moduleResolution": "Node"
   },
-  "include": [
-    "./src/index.ts"
-  ],
   "exclude": ["node_modules", "dist"]
 }

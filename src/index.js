@@ -1,18 +1,24 @@
-import exec from "node:child_process";
-// 定义参数
-const docUrl = "https://petstore.swagger.io/v2/swagger.json";
-const requestLibPath = "import request from '@/utils/http';";
-const outDir = "service";
-// 执行 Go 程序，并传入参数
-// @ts-ignore
-exec(`api -docUrl="${docUrl}" -requestLibPath="${requestLibPath}" -outDir="${outDir}"`, (error, stdout, stderr) => {
-    if (error) {
-        console.error(`Error: ${error.message}`);
-        return;
+import { exec } from "node:child_process";
+import * as process from "node:process";
+export function generateAPI(options) {
+    const { docUrl, requestLibPath } = options;
+    let execCommand;
+    if (options.outDir) {
+        execCommand = `./api -docUrl="${docUrl}" -requestLibPath="${requestLibPath}" -outDir="${options.outDir}"`;
     }
-    if (stderr) {
-        console.error(`Stderr: ${stderr}`);
-        return;
+    else {
+        execCommand = `./api -docUrl="${docUrl}" -requestLibPath="${requestLibPath}"`;
     }
-    console.log(`Stdout: ${stdout}`);
-});
+    exec(execCommand, (error, stdout, stderr) => {
+        if (error) {
+            console.log(process.cwd());
+            console.error(`Error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`Stderr: ${stderr}`);
+            return;
+        }
+        console.log(`Stdout: ${stdout}`);
+    });
+}
