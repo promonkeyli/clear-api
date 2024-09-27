@@ -1,5 +1,5 @@
 declare namespace API {
-{{#each typeData }}
+{{#each tplData }}
     type {{this.name}} = {
       {{#each this.properties}}
           {{#if this.description}}

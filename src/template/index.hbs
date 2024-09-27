@@ -1,9 +1,9 @@
-{{#each tags }}
+{{#each tplData }}
 import * as {{this}} from './{{this}}.js';
 {{/each}}
 
 export default {
-{{#each tags }}
+{{#each tplData }}
     {{this}},
 {{/each}}
 }

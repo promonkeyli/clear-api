@@ -26,7 +26,7 @@ type PropertyItem = {
 };
 
 export function handleTypeTemplateData(openAPI: OpenAPI3): {
-	typeData: TypeTplDataItem[];
+	tplData: TypeTplDataItem[];
 } {
 	const typeTplData: TypeTplDataItem[] = [];
 	// 提取 schemas, swagger2中称为 definitions, openAPI3 更换为 components => schemas
@@ -68,5 +68,5 @@ export function handleTypeTemplateData(openAPI: OpenAPI3): {
 		};
 		typeTplData.push(typeTplDataItem);
 	}
-	return { typeData: typeTplData };
+	return { tplData: typeTplData };
 }

@@ -3,7 +3,9 @@
  */
 import type { OpenAPI3 } from "../../utils/openAPI_type.js";
 
-export function handleIndexTemplateData(openAPI: OpenAPI3): { tags: string[] } {
+export function handleIndexTemplateData(openAPI: OpenAPI3): {
+	tplData: string[];
+} {
 	const tags = openAPI.tags || [];
-	return { tags: tags.map((i) => i.name) };
+	return { tplData: tags.map((i) => i.name) };
 }

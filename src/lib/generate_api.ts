@@ -16,7 +16,7 @@ export interface GenerateAPIOptions {
 	outDir: string;
 }
 export async function generateAPI(options: GenerateAPIOptions) {
-	const { docUrl } = options;
+	const { docUrl, requestLibPath } = options;
 	// 1. 转换openAPI
 	const openapi = await convertToOpenAPI(docUrl);
 	logAPI("OPEN API 数据转换完成！", LogColor.Green);
@@ -43,10 +43,13 @@ export async function generateAPI(options: GenerateAPIOptions) {
 		templateData: handleTypeTemplateData(openapi),
 		outFileName: path.join(apiPath, "typing.d.ts"),
 	});
-	// 5. 依据模版渲染 各个controller接口文件(依据 openAPI paths数据生成 )
-	renderTemplate({
-		template: "service",
-		templateData: handleServiceTemplateData(openapi),
-		outFileName: path.join(apiPath, "typing.d.ts"),
-	});
+	// 5. 依据模版渲染 各个controller接口文件(依据 openAPI paths数据生成); 循环tags生成接口文件
+	const tags = openapi.tags || [];
+	for (const { name: tagName } of tags) {
+		renderTemplate({
+			template: "service",
+			templateData: handleServiceTemplateData(requestLibPath, tagName, openapi),
+			outFileName: path.join(apiPath, `${tagName}.ts`),
+		});
+	}
 }
