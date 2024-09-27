@@ -14,6 +14,8 @@ export interface OpenAPI3 {
 	components?: Components;
 	/* 安全定义 */
 	security?: SecurityRequirement[];
+	/* 标签定义 */
+	tags?: Tag[];
 }
 
 export interface Info {
@@ -82,13 +84,48 @@ export interface Response {
 	/* 内容定义 */
 	content?: { [mediaType: string]: MediaType };
 }
-
+export type SchemaType =
+	| "object"
+	| "array"
+	| "string"
+	| "number"
+	| "boolean"
+	| "integer"
+	| "null";
 export interface Schema {
 	/* 数据类型 */
-	type: string;
+	type: SchemaType;
 	/* 属性 */
 	properties?: { [key: string]: Schema };
-	/* 可以添加更多的属性，如 `items`, `enum`, `oneOf` 等... */
+	/* 是否必需 */
+	required?: boolean[];
+	/* 数组项的类型 */
+	items?: Schema;
+	/* 描述 */
+	description?: string;
+	/* 默认值 */
+	default?: any;
+	/* 示例值 */
+	example?: any;
+	/* 枚举值 */
+	enum?: any[];
+	/* 额外的属性 */
+	additionalProperties?: boolean | Schema;
+	/* 格式 */
+	format?: string;
+	/* 约束条件 */
+	minimum?: number;
+	maximum?: number;
+	exclusiveMinimum?: number;
+	exclusiveMaximum?: number;
+	minLength?: number;
+	maxLength?: number;
+	pattern?: string;
+	/* 组合条件 */
+	oneOf?: Schema[];
+	allOf?: Schema[];
+	anyOf?: Schema[];
+	not?: Schema;
 }
 
 export interface MediaType {
@@ -120,4 +157,10 @@ export interface License {
 	name: string;
 	/* 许可证 URL */
 	url?: string;
+}
+export interface Tag {
+	/* 标签名称 */
+	name: string;
+	/* 标签描述 */
+	description?: string;
 }

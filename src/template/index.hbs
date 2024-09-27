@@ -1,0 +1,10 @@
+{{#each tags }}
+import * as {{this}} from './{{this}}.js';
+{{/each}}
+
+export default {
+{{#each tags }}
+    {{this}},
+{{/each}}
+}
+

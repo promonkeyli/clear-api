@@ -3,7 +3,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import pug from "pug";
+import handlebars from "handlebars";
 import { LogColor, logAPI } from "./log_api.js";
 
 export interface RenderTemplateOptions {
@@ -23,10 +23,11 @@ export function renderTemplate(options: RenderTemplateOptions) {
 		__dirname,
 		"src",
 		"template",
-		`${template}.pug`,
+		`${template}.hbs`,
 	);
+	const data = fs.readFileSync(templatePath, "utf-8");
 	// 2. 编译、渲染模版
-	const result = pug.renderFile(templatePath, templateData);
+	const result = handlebars.compile(data)(templateData);
 	// 3. 写入文件
 	fs.writeFile(outFileName, result, (err) => {
 		if (err) {

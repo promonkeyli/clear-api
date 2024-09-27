@@ -1,4 +1,9 @@
 /**
  * 处理 index.ts文件的模版数据
  */
-export function handleIndexTemplateData(): any {}
+import type { OpenAPI3 } from "../../utils/openAPI_type.js";
+
+export function handleIndexTemplateData(openAPI: OpenAPI3): { tags: string[] } {
+	const tags = openAPI.tags || [];
+	return { tags: tags.map((i) => i.name) };
+}

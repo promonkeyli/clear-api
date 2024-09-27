@@ -1,4 +1,6 @@
 /**
  * 处理 service 文件的模版数据
  */
-export function handleServiceTemplateData() {}
+import type { OpenAPI3 } from "../../utils/openAPI_type.js";
+
+export function handleServiceTemplateData(openAPI: OpenAPI3) {}

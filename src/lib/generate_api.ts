@@ -34,19 +34,19 @@ export async function generateAPI(options: GenerateAPIOptions) {
 	// 3. 依据模版渲染 index.ts 文件(用于导出所有生成的controller接口文件)
 	renderTemplate({
 		template: "index",
-		templateData: handleIndexTemplateData(),
+		templateData: handleIndexTemplateData(openapi),
 		outFileName: path.join(apiPath, "index.ts"),
 	});
 	// 4. 依据模版渲染 typings.d.ts 文件(用于导出openAPI生成的类型文件)
 	renderTemplate({
 		template: "type",
-		templateData: handleTypeTemplateData(),
+		templateData: handleTypeTemplateData(openapi),
 		outFileName: path.join(apiPath, "typing.d.ts"),
 	});
 	// 5. 依据模版渲染 各个controller接口文件(依据 openAPI paths数据生成 )
 	renderTemplate({
 		template: "service",
-		templateData: handleServiceTemplateData(),
+		templateData: handleServiceTemplateData(openapi),
 		outFileName: path.join(apiPath, "typing.d.ts"),
 	});
 }

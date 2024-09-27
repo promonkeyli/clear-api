@@ -3,6 +3,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { type Schema, SchemaType } from "./openAPI_type.js";
 
 /* 检查目录是否存在 */
 export function directoryExists(dirPath: string): boolean {
@@ -37,5 +38,37 @@ export function createAllDirectory(dirPath: string) {
 	if (!fs.existsSync(normalizedPath)) {
 		createAllDirectory(path.dirname(normalizedPath));
 		fs.mkdirSync(normalizedPath);
+	}
+}
+
+/* openAPI schema type => typeScript 类型 */
+export function convertSchemaToTypeScript(schema: Schema): string {
+	switch (schema.type) {
+		case "string":
+			return "string";
+		case "number":
+			return "number";
+		case "integer":
+			return "number"; // TypeScript 中 integer 也用 number 表示
+		case "boolean":
+			return "boolean";
+		case "array":
+			if (schema.items) {
+				return `${convertSchemaToTypeScript(schema.items)}[]`;
+			}
+			return "any[]";
+		case "object":
+			if (schema.properties) {
+				const properties = Object.entries(schema.properties)
+					.map(([key, value]) => `${key}: ${convertSchemaToTypeScript(value)}`)
+					.join("; ");
+				return `{ ${properties} }`;
+			}
+			return "{}";
+		default:
+			if (schema.enum) {
+				return schema.enum.map((value) => JSON.stringify(value)).join(" | ");
+			}
+			return "any"; // 默认返回 any 类型
 	}
 }
