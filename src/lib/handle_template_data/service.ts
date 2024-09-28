@@ -24,6 +24,7 @@ export function handleServiceTemplateData(
 	openAPI: OpenAPI3,
 ): ServiceTplData {
 	const apiData: ApiDataItem[] = [];
+	const paths: any[] = [];
 	return {
 		requestLibPath,
 		apiData,
