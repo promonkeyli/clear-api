@@ -18,6 +18,24 @@ interface ApiDataItem {
 	path: string;
 	/* api请求方法 */
 	method: string;
+	/* api 请求体body是否存在 */
+	hasBody: boolean;
+	/* api 请求体body类型 */
+	bodyType: string;
+	/* api 查询参数params是否存在 */
+	hasParams: boolean;
+	/* api 查询参数params类型 */
+	paramsType: ParamsType;
+}
+interface ParamsType {
+	/* 是否存在路径path参数 */
+	inPath: boolean;
+	/* 查询path参数数组 */
+	pathArr: Array<any>;
+	/* 是否存在查询query参数 */
+	inQuery: boolean;
+	/* 查询query参数数组 */
+	queryArray: Array<any>;
 }
 
 export function handleServiceTemplateData(
@@ -34,8 +52,16 @@ export function handleServiceTemplateData(
 				description: operation.description, // 函数的描述
 				path: pathKey, // 请求url
 				method: methodKey, // 请求方法
+				hasBody: true,
+				bodyType: "s",
+				hasParams: true,
+				paramsType: {
+					inPath: true,
+					pathArr: [],
+					inQuery: true,
+					queryArray: [],
+				},
 			};
-			console.log(typeof operation.description);
 			apiData.push(apiDataItem);
 		}
 	}
