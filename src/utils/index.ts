@@ -3,7 +3,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { type Schema, SchemaType } from "./openAPI_type.js";
+import type { PathItem, Schema } from "./openAPI_type.js";
 
 /* 检查目录是否存在 */
 export function directoryExists(dirPath: string): boolean {
@@ -71,4 +71,21 @@ export function convertSchemaToTypeScript(schema: Schema): string {
 			}
 			return "any"; // 默认返回 any 类型
 	}
+}
+
+/* openapi 按照tag 分类paths */
+export function getPathsByTag(
+	tag: string,
+	paths: { [path: string]: PathItem },
+): { [path: string]: PathItem } {
+	const filterPaths: { [path: string]: PathItem } = {};
+	for (const pathKey in paths) {
+		const pathValue = paths[pathKey];
+		const [_, firstValue] = Object.entries(pathValue)[0];
+		const currentTag = firstValue.tags[0];
+		if (currentTag === tag) {
+			filterPaths[pathKey] = pathValue;
+		}
+	}
+	return filterPaths;
 }

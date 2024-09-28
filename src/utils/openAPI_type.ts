@@ -49,7 +49,16 @@ export interface PathItem {
 	put?: Operation;
 	/* DELETE 操作 */
 	delete?: Operation;
-	/* 其他 HTTP 方法... */
+	/* OPTIONS 操作 */
+	options?: Operation;
+	/* HEAD 操作 */
+	head?: Operation;
+	/* PATCH 操作 */
+	patch?: Operation;
+	/* TRACE 操作 */
+	trace?: Operation;
+	/* CONNECT 操作 */
+	connect?: Operation;
 }
 
 export interface Operation {
@@ -65,8 +74,23 @@ export interface Operation {
 	responses: { [statusCode: string]: Response };
 	/* 安全定义 */
 	security?: SecurityRequirement[];
+	/* 请求体 */
+	requestBody?: RequestBody;
+	/* 标签 */
+	tags?: string[];
+	/* 过时标志 */
+	deprecated?: boolean;
+	/* 服务器 */
+	servers?: Server[];
 }
-
+export interface RequestBody {
+	/* 请求体的描述 */
+	description?: string;
+	/* 是否必需 */
+	required?: boolean;
+	/* 内容类型 */
+	content: { [mediaType: string]: MediaType };
+}
 export interface Parameter {
 	/* 参数名称 */
 	name: string;

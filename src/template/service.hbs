@@ -1,3 +1,10 @@
 {{{ requestLibPath }}}
 
-
+{{#each apiData }}
+{{#if this.description}}/* {{this.description}} */{{/if}}
+export async function {{this.name}} (options?: { [key: string]: any }) {
+  return request<any>("{{this.path}}", {
+    method: "{{this.method}}"
+  })
+}
+{{/each}}

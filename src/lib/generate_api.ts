@@ -1,5 +1,7 @@
 import path from "node:path";
+import { getPathsByTag } from "../utils/index.js";
 import { LogColor, logAPI } from "../utils/log_api.js";
+import type { PathItem } from "../utils/openAPI_type.js";
 import { renderTemplate } from "../utils/render_template.js";
 import { convertToOpenAPI } from "./convert_to_openAPI.js";
 import { createDirectory } from "./create_directory.js";
@@ -46,9 +48,14 @@ export async function generateAPI(options: GenerateAPIOptions) {
 	// 5. 依据模版渲染 各个controller接口文件(依据 openAPI paths数据生成); 循环tags生成接口文件
 	const tags = openapi.tags || [];
 	for (const { name: tagName } of tags) {
+		// 获取指定tag的paths
+		const paths: { [path: string]: PathItem } = getPathsByTag(
+			tagName,
+			openapi.paths,
+		);
 		renderTemplate({
 			template: "service",
-			templateData: handleServiceTemplateData(requestLibPath, tagName, openapi),
+			templateData: handleServiceTemplateData(requestLibPath, paths),
 			outFileName: path.join(apiPath, `${tagName}.ts`),
 		});
 	}
