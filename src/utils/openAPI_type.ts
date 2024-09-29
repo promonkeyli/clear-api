@@ -98,6 +98,8 @@ export interface Parameter {
 	in: "query" | "header" | "path" | "cookie";
 	/* 是否必需 */
 	required?: boolean;
+	/* 参数描述 */
+	description?: string;
 	/* 参数类型 */
 	schema: Schema;
 }
@@ -150,6 +152,8 @@ export interface Schema {
 	allOf?: Schema[];
 	anyOf?: Schema[];
 	not?: Schema;
+	/* 引用其他定义 */
+	$ref?: string;
 }
 
 export interface MediaType {

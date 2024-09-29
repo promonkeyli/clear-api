@@ -26,9 +26,11 @@ export function renderTemplate(options: RenderTemplateOptions) {
 		`${template}.hbs`,
 	);
 	const data = fs.readFileSync(templatePath, "utf-8");
-	// 2. 编译、渲染模版
+	// 2. 模版自定义一些助手函数
+	handlebars.registerHelper("length0", (array) => array.length === 0);
+	// 3. 编译、渲染模版
 	const result = handlebars.compile(data)(templateData);
-	// 3. 写入文件
+	// 4. 写入文件
 	fs.writeFile(outFileName, result, (err) => {
 		if (err) {
 			logAPI(err.name, LogColor.Red);
